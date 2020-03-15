@@ -1,0 +1,14 @@
+type: object
+properties:
+  SessionID:
+    type: integer
+    description: Идентификатор сеанса
+  Seats:
+    type: integer
+    description: Количество резервируемых мест
+  Phone:
+    type: string
+    description: Номер телефона
+  Email:
+    type: string
+    description: Email

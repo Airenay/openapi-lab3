@@ -1,0 +1,5 @@
+description: Список фильмов
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Movies.yaml

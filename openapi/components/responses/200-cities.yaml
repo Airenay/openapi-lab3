@@ -1,0 +1,5 @@
+description: Список городов
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Cities.yaml

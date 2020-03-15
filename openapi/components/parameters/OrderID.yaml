@@ -1,0 +1,5 @@
+name: OrderID
+description: Идентификатор заказа
+in: query
+schema:
+  type: integer

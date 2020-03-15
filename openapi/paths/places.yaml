@@ -1,0 +1,14 @@
+get:
+  tags: [ Кинотеатры ]
+  operationId: GetPlaceList
+  summary: Запрос списка кинотеатров
+  description:
+    Возвращает список зарегистрированных кинотеатров.
+    Доступна фильтрация по идентификатору кинотеатра и/или города.
+    Все параметры опциональны.
+  parameters:
+    - $ref: ../components/parameters/PlaceID.yaml
+    - $ref: ../components/parameters/CityID.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/200-places.yaml

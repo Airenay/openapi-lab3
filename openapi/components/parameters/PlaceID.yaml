@@ -1,0 +1,5 @@
+name: PlaceID
+description: Идентификатор кинотеатра
+in: query
+schema:
+  type: integer

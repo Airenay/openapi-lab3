@@ -1,0 +1,8 @@
+type: object
+properties:
+  List:
+    type: array
+    items:
+      $ref: ./Place.yaml
+  Status:
+    $ref: ./Status.yaml

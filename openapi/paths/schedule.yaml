@@ -1,0 +1,16 @@
+get:
+  tags: [ Расписание сеансов ]
+  operationId: GetSchedule
+  summary: Запрос расписания сеансов
+  description:
+    Возвращает список сеансов.
+    Доступна фильтрация по идентификаторам сеанса и/или города и/или кинотеатра и/или фильма.
+    Все параметры опциональны.
+  parameters:
+    - $ref: ../components/parameters/SessionID.yaml
+    - $ref: ../components/parameters/CityID.yaml
+    - $ref: ../components/parameters/PlaceID.yaml
+    - $ref: ../components/parameters/MovieID.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/200-schedule.yaml

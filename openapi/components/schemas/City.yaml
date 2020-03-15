@@ -1,0 +1,8 @@
+type: object
+properties:
+  CityID:
+    type: integer
+    description: Идентификатор города
+  Name:
+    type: string
+    description: Название города

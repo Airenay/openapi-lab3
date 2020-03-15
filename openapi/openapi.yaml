@@ -1,0 +1,40 @@
+openapi: 3.0.2
+
+info:
+  title: API Rambler-Касса
+  version: 1.0.0
+  description: |
+    ### API резервирования билетов в кинотеатры.
+    Большинство методов возвращают, помимо данных, объект Status с
+    указанием результата выполнения запроса в виде кода и текстового
+    описания.
+  contact:
+    name: Irina Semyonova
+    email: airenay@mail.ru
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Internal staging server for testing
+
+paths:
+  /cities:
+    $ref: ./paths/cities.yaml
+  /places:
+    $ref: ./paths/places.yaml
+  /movies:
+    $ref: ./paths/movies.yaml
+  /schedule:
+    $ref: ./paths/schedule.yaml
+  /orders:
+    $ref: ./paths/orders.yaml
+
+components:
+  securitySchemes:
+    User:
+      type: apiKey
+      description:
+        API ключ для авторизации персонализированных запросов.
+        Вариант получения - через форму аутентификации пользователя с дальнейшей
+        передачей в cookies и экспирацией со стороны сервера при неактивности пользователя.
+      name: AuthID
+      in: cookie

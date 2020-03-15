@@ -1,0 +1,13 @@
+get:
+  tags: [ Города ]
+  operationId: GetCityList
+  summary: Запрос списка городов
+  description:
+    Возвращает список городов, в которых есть зарегистрированные кинотеатры.
+    Доступна фильтрация по идентификатору города.
+    Параметр опциональный.
+  parameters:
+    - $ref: ../components/parameters/CityID.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/200-cities.yaml

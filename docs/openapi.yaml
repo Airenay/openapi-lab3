@@ -1,0 +1,387 @@
+openapi: 3.0.2
+info:
+  title: API Rambler-Касса
+  version: 1.0.0
+  description: |
+    ### API резервирования билетов в кинотеатры.
+    Большинство методов возвращают, помимо данных, объект Status с
+    указанием результата выполнения запроса в виде кода и текстового
+    описания.
+  contact:
+    name: Irina Semyonova
+    email: airenay@mail.ru
+servers:
+  - url: 'http://localhost:3000/api/v1'
+    description: Internal staging server for testing
+paths:
+  /cities:
+    get:
+      tags:
+        - Города
+      operationId: GetCityList
+      summary: Запрос списка городов
+      description: >-
+        Возвращает список городов, в которых есть зарегистрированные кинотеатры.
+        Доступна фильтрация по идентификатору города. Параметр опциональный.
+      parameters:
+        - $ref: '#/components/parameters/CityID'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-cities'
+  /places:
+    get:
+      tags:
+        - Кинотеатры
+      operationId: GetPlaceList
+      summary: Запрос списка кинотеатров
+      description: >-
+        Возвращает список зарегистрированных кинотеатров. Доступна фильтрация по
+        идентификатору кинотеатра и/или города. Все параметры опциональны.
+      parameters:
+        - $ref: '#/components/parameters/PlaceID'
+        - $ref: '#/components/parameters/CityID'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-places'
+  /movies:
+    get:
+      tags:
+        - Фильмы
+      operationId: GetMovieList
+      summary: Запрос списка фильмов
+      description: >-
+        Возвращает список фильмов. Доступна фильтрация по идентификатору фильма.
+        Параметр опциональный.
+      parameters:
+        - $ref: '#/components/parameters/MovieID'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-movies'
+  /schedule:
+    get:
+      tags:
+        - Расписание сеансов
+      operationId: GetSchedule
+      summary: Запрос расписания сеансов
+      description: >-
+        Возвращает список сеансов. Доступна фильтрация по идентификаторам сеанса
+        и/или города и/или кинотеатра и/или фильма. Все параметры опциональны.
+      parameters:
+        - $ref: '#/components/parameters/SessionID'
+        - $ref: '#/components/parameters/CityID'
+        - $ref: '#/components/parameters/PlaceID'
+        - $ref: '#/components/parameters/MovieID'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-schedule'
+  /orders:
+    post:
+      tags:
+        - Заказы
+      operationId: CreateOrder
+      summary: Создание нового заказа
+      description: >-
+        Размещает новый заказ на указанный сеанс с резервированием указанного
+        количества мест. Все параметры, кроме Phone и Email, обязательны. Хотя
+        бы один из параметров Phone и/или Email должен присутствовать.
+      security:
+        - User: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderData'
+      responses:
+        '201':
+          $ref: '#/components/responses/201-order'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          $ref: '#/components/responses/409'
+    get:
+      tags:
+        - Заказы
+      operationId: GetOrder
+      summary: Просмотр данных заказов пользователя
+      description: >-
+        Возвращает информацию о заказах авторизованного пользователя. Доступна
+        фильтрация по идентификатору заказа. Параметр опциональный.
+      security:
+        - User: []
+      parameters:
+        - $ref: '#/components/parameters/OrderID'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-orders'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - Заказы
+      operationId: DeleteOrder
+      summary: Удаление заказа
+      description: Удаляет заказ по его идентификатору. Параметр обязательный.
+      security:
+        - User: []
+      parameters:
+        - $ref: '#/components/parameters/OrderID'
+      responses:
+        '204':
+          description: Заказ удален
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+components:
+  securitySchemes:
+    User:
+      type: apiKey
+      description: >-
+        API ключ для авторизации персонализированных запросов. Вариант получения
+        - через форму аутентификации пользователя с дальнейшей передачей в
+        cookies и экспирацией со стороны сервера при неактивности пользователя.
+      name: AuthID
+      in: cookie
+  parameters:
+    CityID:
+      name: CityID
+      description: Идентификатор города
+      in: query
+      schema:
+        type: integer
+    PlaceID:
+      name: PlaceID
+      description: Идентификатор кинотеатра
+      in: query
+      schema:
+        type: integer
+    MovieID:
+      name: MovieID
+      description: Идентификатор фильма
+      in: query
+      schema:
+        type: integer
+    SessionID:
+      name: SessionID
+      description: Идентификатор сеанса
+      in: query
+      schema:
+        type: integer
+    OrderID:
+      name: OrderID
+      description: Идентификатор заказа
+      in: query
+      schema:
+        type: integer
+  schemas:
+    City:
+      type: object
+      properties:
+        CityID:
+          type: integer
+          description: Идентификатор города
+        Name:
+          type: string
+          description: Название города
+    Status:
+      type: object
+      properties:
+        Code:
+          type: integer
+          description: HTTP код результата выполнения запроса
+        Message:
+          type: string
+          description: 'Текстовое описание, соответствующее коду результата'
+    Cities:
+      type: object
+      properties:
+        List:
+          type: array
+          items:
+            $ref: '#/components/schemas/City'
+        Status:
+          $ref: '#/components/schemas/Status'
+    Place:
+      type: object
+      properties:
+        PlaceID:
+          type: integer
+          description: Идентификатор кинотеатра
+        Name:
+          type: string
+          description: Название кинотеатра
+        CityID:
+          type: integer
+          description: Идентификатор города
+    Places:
+      type: object
+      properties:
+        List:
+          type: array
+          items:
+            $ref: '#/components/schemas/Place'
+        Status:
+          $ref: '#/components/schemas/Status'
+    Movie:
+      type: object
+      properties:
+        MovieID:
+          type: integer
+          description: Идентификатор фильма
+        Name:
+          type: string
+          description: Название фильма
+        Year:
+          type: integer
+          description: Год выпуска фильма
+        Duration:
+          type: integer
+          description: Продолжительность в минутах
+    Movies:
+      type: object
+      properties:
+        List:
+          type: array
+          items:
+            $ref: '#/components/schemas/Movie'
+        Status:
+          $ref: '#/components/schemas/Status'
+    Session:
+      type: object
+      properties:
+        SessionID:
+          type: integer
+          description: Идентификатор сеанса
+        CityID:
+          type: integer
+          description: Идентификатор города
+        PlaceID:
+          type: integer
+          description: Идентификатор кинотеатра
+        MovieID:
+          type: integer
+          description: Идентификатор фильма
+        Date:
+          type: string
+          format: date-time
+          description: Дата и время начала сеанса
+        Seats:
+          type: integer
+          description: Количество свободных мест
+    Schedule:
+      type: object
+      properties:
+        List:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+        Status:
+          $ref: '#/components/schemas/Status'
+    OrderData:
+      type: object
+      properties:
+        SessionID:
+          type: integer
+          description: Идентификатор сеанса
+        Seats:
+          type: integer
+          description: Количество резервируемых мест
+        Phone:
+          type: string
+          description: Номер телефона
+        Email:
+          type: string
+          description: Email
+    Orders:
+      type: object
+      properties:
+        List:
+          type: array
+          items:
+            properties:
+              OrderID:
+                type: integer
+                description: Идентификатор заказа
+              OrderData:
+                $ref: '#/components/schemas/OrderData'
+        Status:
+          $ref: '#/components/schemas/Status'
+    Error:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+    OrderResponse:
+      type: object
+      properties:
+        OrderID:
+          type: integer
+          description: Идентификатор заказа
+        OrderData:
+          $ref: '#/components/schemas/OrderData'
+        Status:
+          $ref: '#/components/schemas/Status'
+  responses:
+    '400':
+      description: Неправильный запрос или недостаточно параметров
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Не авторизован
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '409':
+      description: 'Конфликт (возможно, мест уже нет)'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    200-cities:
+      description: Список городов
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Cities'
+    200-places:
+      description: Список кинотеатров
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Places'
+    200-movies:
+      description: Список фильмов
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Movies'
+    200-schedule:
+      description: Список сеансов
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Schedule'
+    200-orders:
+      description: Данные о заказах
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Orders'
+    201-order:
+      description: Заказ создан
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderResponse'

@@ -1,0 +1,63 @@
+post:
+  tags: [ Заказы ]
+  operationId: CreateOrder
+  summary: Создание нового заказа
+  description:
+    Размещает новый заказ на указанный сеанс с резервированием указанного количества мест.
+    Все параметры, кроме Phone и Email, обязательны. Хотя бы один из параметров Phone и/или
+    Email должен присутствовать.
+  security:
+    - User: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/OrderData.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/201-order.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '409':
+      $ref: ../components/responses/409.yaml
+
+get:
+  tags: [ Заказы ]
+  operationId: GetOrderList
+  summary: Просмотр данных заказов пользователя
+  description:
+    Возвращает информацию о заказах авторизованного пользователя.
+    Доступна фильтрация по идентификатору заказа.
+    Параметр опциональный.
+  security:
+    - User: []
+  parameters:
+    - $ref: ../components/parameters/OrderID.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/200-orders.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+
+delete:
+  tags: [ Заказы ]
+  operationId: DeleteOrder
+  summary: Удаление заказа
+  description:
+    Удаляет заказ по его идентификатору.
+    Параметр обязательный.
+  security:
+    - User: []
+  parameters:
+    - $ref: ../components/parameters/OrderID.yaml
+
+  responses:
+    '204':
+      description: Заказ удален
+    '401':
+      $ref: ../components/responses/401.yaml
+    '404':
+      $ref: ../components/responses/404.yaml

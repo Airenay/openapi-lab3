@@ -1,0 +1,9 @@
+type: object
+properties:
+  OrderID:
+    type: integer
+    description: Идентификатор заказа
+  OrderData:
+    $ref: ./OrderData.yaml
+  Status:
+    $ref: ./Status.yaml

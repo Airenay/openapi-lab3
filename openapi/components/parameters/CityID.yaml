@@ -1,0 +1,5 @@
+name: CityID
+description: Идентификатор города
+in: query
+schema:
+  type: integer

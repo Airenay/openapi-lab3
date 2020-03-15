@@ -1,0 +1,5 @@
+description: Данные о заказах
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Orders.yaml

@@ -1,0 +1,5 @@
+name: MovieID
+description: Идентификатор фильма
+in: query
+schema:
+  type: integer

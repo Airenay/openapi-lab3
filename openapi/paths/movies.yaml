@@ -1,0 +1,13 @@
+get:
+  tags: [ Фильмы ]
+  operationId: GetMovieList
+  summary: Запрос списка фильмов
+  description:
+    Возвращает список фильмов.
+    Доступна фильтрация по идентификатору фильма.
+    Параметр опциональный.
+  parameters:
+    - $ref: ../components/parameters/MovieID.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/200-movies.yaml

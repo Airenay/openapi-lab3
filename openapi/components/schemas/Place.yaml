@@ -1,0 +1,11 @@
+type: object
+properties:
+  PlaceID:
+    type: integer
+    description: Идентификатор кинотеатра
+  Name:
+    type: string
+    description: Название кинотеатра
+  CityID:
+    type: integer
+    description: Идентификатор города

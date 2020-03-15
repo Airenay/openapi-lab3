@@ -1,0 +1,5 @@
+description: Конфликт (возможно, мест уже нет)
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Error.yaml

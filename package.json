@@ -1,0 +1,16 @@
+{
+  "name": "API Rambler-Касса",
+  "version": "1.0.0",
+  "description": "API резервирования билетов в кинотеатры.",
+  "main": "index.js",
+  "scripts": {
+    "start": "openapi preview-docs",
+    "build": "openapi bundle -o dist",
+    "test": "openapi validate"
+  },
+  "author": "Airenay",
+  "license": "ISC",
+  "dependencies": {
+    "@redocly/openapi-cli": "^0.8.4"
+  }
+}

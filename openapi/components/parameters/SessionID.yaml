@@ -1,0 +1,5 @@
+name: SessionID
+description: Идентификатор сеанса
+in: query
+schema:
+  type: integer

@@ -1,0 +1,5 @@
+description: Неправильный запрос или недостаточно параметров
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Error.yaml

@@ -1,0 +1,5 @@
+description: Список сеансов
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Schedule.yaml

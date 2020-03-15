@@ -1,0 +1,8 @@
+type: object
+properties:
+  Code:
+    type: integer
+    description: HTTP код результата выполнения запроса
+  Message:
+    type: string
+    description: Текстовое описание, соответствующее коду результата

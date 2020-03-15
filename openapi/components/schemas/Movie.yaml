@@ -1,0 +1,14 @@
+type: object
+properties:
+  MovieID:
+    type: integer
+    description: Идентификатор фильма
+  Name:
+    type: string
+    description: Название фильма
+  Year:
+    type: integer
+    description: Год выпуска фильма
+  Duration:
+    type: integer
+    description: Продолжительность в минутах

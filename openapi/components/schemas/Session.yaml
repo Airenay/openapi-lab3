@@ -1,0 +1,21 @@
+type: object
+properties:
+  SessionID:
+    type: integer
+    description: Идентификатор сеанса
+  CityID:
+    type: integer
+    description: Идентификатор города
+  PlaceID:
+    type: integer
+    description: Идентификатор кинотеатра
+  MovieID:
+    type: integer
+    description: Идентификатор фильма
+  Date:
+    type: string
+    format: date-time
+    description: Дата и время начала сеанса
+  Seats:
+    type: integer
+    description: Количество свободных мест

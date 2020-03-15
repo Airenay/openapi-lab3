@@ -1,0 +1,5 @@
+description: Заказ создан
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/OrderResponse.yaml
